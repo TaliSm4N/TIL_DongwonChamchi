@@ -11,11 +11,13 @@
 출력
 첫째 줄에 연결 요소의 개수를 출력한다.
 */
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
+#include <cstdio>
 #include <algorithm>
 #include <vector>
-#include <queue>
+#include <stack>
 
 struct Edge
 {
@@ -23,28 +25,62 @@ struct Edge
     int end;
 };
 
+std::vector<int> vertex[1001];
+bool check[1001] = {false,};
+
+int dfs(int v)
+{
+    for(int i=0;i<vertex[v].size();i++)
+    {
+        if(!check[vertex[v][i]])
+        {
+            check[vertex[v][i]]=true;
+            dfs(vertex[v][i]);
+        }
+    }
+
+    return 0;
+}
+
+
 int main()
 {
     int N,M;
     Edge e;
     int cnt=0;
-    int vertex;
-    int p[1001][1001]={0};
     //std::vector<Edge> edgeList;
+
+    //std::vector<std::vector<int>> group;
+    int num = 1;
     //std::queue<int> vertexList;
     //std::vector<Edge>::iterator iter;
     //bool flag[1001]={false,};
-
     scanf("%d%d",&N,&M);
 
     for(int i=0;i<M;i++)
     {
         //printf("%d:",i);
         scanf("%d%d",&e.start,&e.end);
-        p[e.start][e.end]=1;
-        p[e.end][e.start]=1;
-        //edgeList.push_back(e);
+        vertex[e.start].push_back(e.end);
+        vertex[e.end].push_back(e.start);
     }
+
+    //std::sort(edgeList.begin(),edgeList.end());
+
+    for(int i=1;i<=N;i++)
+    {
+        if(!check[i])
+        {
+            cnt++;
+            check[i]=true;
+            dfs(i);
+        }
+    }
+
+
+
+
+    //아래 코드는 시간 초과
 /*
     while(!edgeList.empty())
     {
