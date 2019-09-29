@@ -56,6 +56,8 @@ int main()
 
         std::sort(ant.begin(),ant.end());
         mid=len/2;
+        max=0;
+        min = 0;
         for(auto iter = ant.begin();iter!=ant.end();iter++)
         {
             if(mid>std::abs(len/2-(*iter)))
@@ -63,13 +65,13 @@ int main()
                 mid=std::abs(len/2-(*iter));
                 min = len/2-mid;
             }
-
-            max=len-std::min(ant[0],len-ant[ant.size()-1]);
+            max=std::max(max,len-std::min(*iter,len-*iter));
         }
+
 
 
         ant.clear();
 
-        std::cout<<min<<" "<<max<<std::endl;
+        std::cout<<min<<' '<<max<<std::endl;
     }
 }
